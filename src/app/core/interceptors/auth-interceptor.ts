@@ -7,9 +7,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.token();
 
-  // Solo agregar token Bearer a las peticiones dirigidas a la API
   if (token && req.url.startsWith(environment.apiUrl)) {
-    // Si la peticion es login, no enviar Authorization
     if (req.url.endsWith('/auth/login')) {
       return next(req);
     }

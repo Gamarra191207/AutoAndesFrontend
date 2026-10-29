@@ -15,7 +15,6 @@ export class SiPermisoDirective {
 
   constructor() {
     effect(() => {
-      // Re-evaluar automaticamente cada vez que cambien los permisos del authService
       this.actualizarVista();
     });
   }

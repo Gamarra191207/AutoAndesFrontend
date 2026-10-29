@@ -121,7 +121,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       </div>
     }
 
-    <!-- Modal confirmación cambio de estado -->
     @if (servicioParaCambioEstado()) {
       <div class="modal-overlay">
         <div class="modal-content">
@@ -138,7 +137,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       </div>
     }
 
-    <!-- Modal confirmación eliminación -->
     @if (servicioParaEliminar()) {
       <div class="modal-overlay">
         <div class="modal-content">

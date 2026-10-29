@@ -12,14 +12,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      // Si es 401 y no es la peticion de login
       if (error.status === 401 && !req.url.endsWith('/auth/login')) {
         const returnUrl = router.url;
         authService.cerrarSesion();
         router.navigate(['/login'], { queryParams: { returnUrl } });
       }
 
-      // Si es 403 (Forbidden), NO cierra la sesion
       if (error.status === 403) {
         ui.mostrarAlerta(
           error.error?.mensaje || 'No tiene permisos suficientes para realizar esta operación.'
