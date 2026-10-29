@@ -161,8 +161,8 @@ export class ReporteIngresosComponent implements OnInit {
     this.cargando.set(true);
     this.error.set(null);
 
-    const fDesde = this.desde ? `${this.desde}T00:00:00` : undefined;
-    const fHasta = this.hasta ? `${this.hasta}T23:59:59` : undefined;
+    const fDesde = this.desde || undefined;
+    const fHasta = this.hasta || undefined;
 
     this.reporteService.ingresosPorServicio(fDesde, fHasta).subscribe({
       next: (res) => {

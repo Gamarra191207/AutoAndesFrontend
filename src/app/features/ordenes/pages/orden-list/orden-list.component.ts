@@ -13,8 +13,8 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
   template: `
     <div class="page-header no-imprimir">
       <div>
-        <h2>Órdenes de Servicio</h2>
-        <p style="color: #64748b; margin: 4px 0 0;">Gestión operativa de órdenes de trabajo mecánicas</p>
+        <h2>Ã“rdenes de Servicio</h2>
+        <p style="color: #64748b; margin: 4px 0 0;">GestiÃ³n operativa de Ã³rdenes de trabajo mecÃ¡nicas</p>
       </div>
       <div>
         <a *appSiPermiso="'ORDEN_REGISTRAR'" routerLink="/ordenes/nuevo" class="btn btn-primary">
@@ -69,20 +69,20 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
 
     @if (cargando()) {
       <div class="card" style="text-align: center; color: #64748b; padding: 40px;">
-        Cargando órdenes de servicio...
+        Cargando Ã³rdenes de servicio...
       </div>
     } @else if (ordenes().length === 0) {
       <div class="card" style="text-align: center; color: #64748b; padding: 40px;">
-        No se encontraron órdenes de servicio con los filtros aplicados.
+        No se encontraron Ã³rdenes de servicio con los filtros aplicados.
       </div>
     } @else {
       <div class="tabla-container card" style="padding: 0;">
         <table class="tabla">
           <thead>
             <tr>
-              <th>N° Orden</th>
+              <th>NÂ° Orden</th>
               <th>Fecha Ingreso</th>
-              <th>Vehículo (Placa)</th>
+              <th>VehÃ­culo (Placa)</th>
               <th>Cliente</th>
               <th style="text-align: right;">Kilometraje</th>
               <th style="text-align: right;">Total</th>
@@ -143,7 +143,7 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
             <div>
               <h3 style="margin: 0; color: #0f2e5c;">Orden de Servicio {{ ordenSeleccionada()?.numero }}</h3>
               <p style="margin: 4px 0 0; color: #64748b; font-size: 13px;">
-                Fecha: {{ ordenSeleccionada()?.fecha | date:'dd/MM/yyyy HH:mm' }} · Usuario: {{ ordenSeleccionada()?.usuarioRegistro }}
+                Fecha: {{ ordenSeleccionada()?.fecha | date:'dd/MM/yyyy HH:mm' }} Â· Usuario: {{ ordenSeleccionada()?.usuarioRegistro }}
               </p>
             </div>
             <span class="badge" [ngClass]="obtenerClaseEstado(ordenSeleccionada()!.estado)">
@@ -153,7 +153,7 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
 
           <div class="grid-2" style="margin-bottom: 16px; font-size: 13px;">
             <div style="background: #f8fafc; padding: 10px; border-radius: 8px;">
-              <strong>Vehículo:</strong> {{ ordenSeleccionada()?.vehiculoPlaca }} ({{ ordenSeleccionada()?.vehiculoModelo }})<br>
+              <strong>VehÃ­culo:</strong> {{ ordenSeleccionada()?.vehiculoPlaca }} ({{ ordenSeleccionada()?.vehiculoModelo }})<br>
               <strong>Kilometraje:</strong> {{ ordenSeleccionada()?.kilometraje | number }} km
             </div>
             <div style="background: #f8fafc; padding: 10px; border-radius: 8px;">
@@ -163,7 +163,7 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
 
           @if (ordenSeleccionada()?.estado === 'ANULADA') {
             <div class="alerta" style="margin-bottom: 16px; font-size: 13px;">
-              <strong>Motivo de anulación:</strong> {{ ordenSeleccionada()?.motivoAnulacion }}
+              <strong>Motivo de anulaciÃ³n:</strong> {{ ordenSeleccionada()?.motivoAnulacion }}
             </div>
           }
 
@@ -202,7 +202,7 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
           </div>
 
           <div class="modal-acciones no-imprimir">
-            <button (click)="imprimirOrden()" class="btn btn-secundario">🖨️ Imprimir</button>
+            <button (click)="imprimirOrden()" class="btn btn-secundario">ðŸ–¨ï¸ Imprimir</button>
             <button (click)="ordenSeleccionada.set(null)" class="btn btn-primary">Cerrar</button>
           </div>
         </div>
@@ -214,11 +214,11 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
         <div class="modal-content">
           <h3 style="color: #b42318;">Anular Orden de Servicio {{ ordenParaAnular()?.numero }}</h3>
           <p style="font-size: 14px;">
-            Por regla de negocio (RN-05), debe ingresar el motivo justificado de la anulación (mínimo 10 caracteres).
+            Por regla de negocio (RN-05), debe ingresar el motivo justificado de la anulaciÃ³n (mÃ­nimo 10 caracteres).
           </p>
 
           <div class="form-group">
-            <label for="motivoAnulacion">Motivo de Anulación *</label>
+            <label for="motivoAnulacion">Motivo de AnulaciÃ³n *</label>
             <textarea
               id="motivoAnulacion"
               class="input"
@@ -238,7 +238,7 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
               class="btn btn-peligro"
               [disabled]="motivoAnulacionTexto.trim().length < 10 || anulando()"
             >
-              {{ anulando() ? 'Anulando...' : 'Confirmar Anulación' }}
+              {{ anulando() ? 'Anulando...' : 'Confirmar AnulaciÃ³n' }}
             </button>
           </div>
         </div>
@@ -275,8 +275,8 @@ export class OrdenListComponent implements OnInit {
     const filtros = {
       placa: this.filtroPlaca || undefined,
       estado: this.filtroEstado || undefined,
-      desde: this.filtroDesde ? `${this.filtroDesde}T00:00:00` : undefined,
-      hasta: this.filtroHasta ? `${this.filtroHasta}T23:59:59` : undefined
+      desde: this.filtroDesde || undefined,
+      hasta: this.filtroHasta || undefined
     };
 
     this.ordenService.listar(filtros).subscribe({
@@ -285,7 +285,7 @@ export class OrdenListComponent implements OnInit {
         this.cargando.set(false);
       },
       error: (err) => {
-        this.error.set(err.error?.mensaje || 'Error al consultar órdenes de servicio.');
+        this.error.set(err.error?.mensaje || 'Error al consultar Ã³rdenes de servicio.');
         this.cargando.set(false);
       }
     });
