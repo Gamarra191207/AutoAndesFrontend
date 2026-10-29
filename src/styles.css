@@ -32,12 +32,10 @@ h2, h3, h4 { margin-top: 0; color: #0f2e5c; }
 .form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #334155; }
 
-/* Modal */
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(2px); }
 .modal-content { background: white; padding: 28px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-width: 480px; width: 90%; }
 .modal-acciones { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
 
-/* Impresion */
 .solo-impresion { display: none; }
 @media print {
   @page { size: A4; margin: 12mm; }

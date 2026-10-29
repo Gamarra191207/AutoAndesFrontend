@@ -110,7 +110,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       </div>
     }
 
-    <!-- Modal confirmación eliminación -->
     @if (vehiculoParaEliminar()) {
       <div class="modal-overlay">
         <div class="modal-content">

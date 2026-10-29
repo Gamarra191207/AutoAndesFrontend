@@ -14,7 +14,6 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  // Estado reactivo con Signals
   private sesionSignal = signal<SesionUsuario | null>(this.leerSesionGuardada());
 
   readonly autenticado = computed(() => this.sesionSignal() !== null);
@@ -83,7 +82,6 @@ export class AuthService {
         return null;
       }
 
-      // Si expiro, descartar
       if (Date.now() >= sesion.expiraEn) {
         sessionStorage.removeItem(CLAVE_SESION);
         return null;

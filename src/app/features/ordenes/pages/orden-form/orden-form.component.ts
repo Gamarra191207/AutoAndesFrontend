@@ -32,7 +32,6 @@ import { ErrorResponse } from '../../../../core/models/error-response';
     }
 
     <form [formGroup]="form" (ngSubmit)="guardar()">
-      <!-- Cabecera de la Orden -->
       <div class="card">
         <h3 style="margin-bottom: 16px; font-size: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
           1. Datos de Ingreso del Vehículo
@@ -76,7 +75,6 @@ import { ErrorResponse } from '../../../../core/models/error-response';
         </div>
       </div>
 
-      <!-- Detalle de Servicios (Líneas) -->
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
           <h3 style="margin: 0; font-size: 16px;">
@@ -165,7 +163,6 @@ import { ErrorResponse } from '../../../../core/models/error-response';
         </p>
       </div>
 
-      <!-- Acciones Finales -->
       <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 40px;">
         <a routerLink="/ordenes" class="btn btn-secundario">Cancelar</a>
         <button

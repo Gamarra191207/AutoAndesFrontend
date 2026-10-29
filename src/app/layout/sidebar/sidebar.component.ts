@@ -58,7 +58,6 @@ import { MENU_ITEMS } from '../../core/config/menu';
 export class SidebarComponent {
   private authService = inject(AuthService);
 
-  // Signal computado: se recalcula reactivamente al cambiar de usuario o permisos
   menuFiltrado = computed(() => {
     return MENU_ITEMS.filter(item => {
       if (!item.permiso) return true;

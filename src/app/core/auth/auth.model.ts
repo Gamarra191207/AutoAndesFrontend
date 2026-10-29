@@ -19,7 +19,7 @@ export interface SesionUsuario {
   nombrecompleto: string;
   roles: string[];
   permisos: string[];
-  expiraEn: number; // timestamp en milisegundos
+  expiraEn: number;
 }
 
 export interface UsuarioPerfil {
