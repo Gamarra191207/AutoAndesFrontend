@@ -1,0 +1,52 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, 'Segoe UI', Roboto, sans-serif; color: #1f2937; background: #f8fafc; }
+h2, h3, h4 { margin-top: 0; color: #0f2e5c; }
+.card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgb(0 0 0 / 0.08); margin-bottom: 20px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.input, .select { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font: inherit; background: #fff; }
+.input:focus, .select:focus { outline: none; border-color: #0f2e5c; ring: 2px #0f2e5c; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
+       background: #fff; color: #1f2937; text-decoration: none; font: inherit; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.btn:hover { background: #f1f5f9; }
+.btn-primary { background: #0f2e5c; border-color: #0f2e5c; color: #fff; }
+.btn-primary:hover { background: #1e3a8a; }
+.btn-peligro { border-color: #b42318; color: #b42318; background: #fef2f2; }
+.btn-peligro:hover { background: #fee2e2; }
+.btn-secundario { background: #e2e8f0; border-color: #cbd5e1; color: #334155; }
+.btn-secundario:hover { background: #cbd5e1; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.alerta { padding: 12px 16px; margin-bottom: 16px; border-radius: 8px; background: #fef3f2; color: #b42318; border: 1px solid #fecdd3; }
+.alerta-exito { padding: 12px 16px; margin-bottom: 16px; border-radius: 8px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.tabla-container { overflow-x: auto; border-radius: 12px; border: 1px solid #e2e8f0; }
+.tabla { width: 100%; border-collapse: collapse; background: #fff; }
+.tabla th { background: #0f2e5c; color: #fff; text-align: left; padding: 12px 14px; font-weight: 600; font-size: 14px; }
+.tabla td { padding: 12px 14px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+.tabla tr:hover { background: #f8fafc; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #dcfce7; color: #166534; font-size: 12px; font-weight: 600; }
+.badge.inactivo { background: #f1f5f9; color: #64748b; }
+.badge.anulada { background: #fee2e2; color: #991b1b; }
+.badge.registrada { background: #e0f2fe; color: #0369a1; }
+.campo-error { color: #b42318; font-size: 12px; margin-top: 4px; display: block; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #334155; }
+
+/* Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(2px); }
+.modal-content { background: white; padding: 28px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-width: 480px; width: 90%; }
+.modal-acciones { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+
+/* Impresion */
+.solo-impresion { display: none; }
+@media print {
+  @page { size: A4; margin: 12mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; }
+  .no-imprimir { display: none !important; }
+  .solo-impresion { display: block; }
+  .card { box-shadow: none; border-radius: 0; padding: 0; }
+  .tabla { border-radius: 0; }
+  .tabla th { background: #fff; color: #000; border-bottom: 2px solid #0f2e5c; }
+  .tabla tr { break-inside: avoid; }
+}
