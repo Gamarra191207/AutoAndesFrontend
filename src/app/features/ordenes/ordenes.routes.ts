@@ -10,6 +10,6 @@ export const ORDENES_ROUTES: Routes = [
     path: 'nuevo',
     loadComponent: () => import('./pages/orden-form/orden-form.component').then(m => m.OrdenFormComponent),
     canActivate: [permisoGuard],
-    data: { permiso: 'ORDEN_CREAR' }
+    data: { permiso: 'ORDEN_REGISTRAR' }
   }
 ];

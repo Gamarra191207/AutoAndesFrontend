@@ -17,7 +17,7 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
         <p style="color: #64748b; margin: 4px 0 0;">Gestión operativa de órdenes de trabajo mecánicas</p>
       </div>
       <div>
-        <a *appSiPermiso="'ORDEN_CREAR'" routerLink="/ordenes/nuevo" class="btn btn-primary">
+        <a *appSiPermiso="'ORDEN_REGISTRAR'" routerLink="/ordenes/nuevo" class="btn btn-primary">
           + Nueva Orden de Servicio
         </a>
       </div>
