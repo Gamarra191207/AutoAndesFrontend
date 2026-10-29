@@ -1,68 +1,105 @@
 # AutoAndes Frontend (SPA)
 
-Aplicación web Single Page Application (SPA) para la gestión operativa y comercial del taller mecánico especializado **AutoAndes**. Desarrollada con **Angular 22** bajo arquitectura Standalone, programación reactiva con **Angular Signals** y tipado estricto con **TypeScript**.
+Aplicación web empresarial Single Page Application (SPA) para la administración operativa, comercial y financiera del taller mecánico especializado **AutoAndes**. Desarrollada bajo arquitectura moderna con **Angular 22 Standalone**, programación reactiva basada en **Angular Signals**, tipado estricto con **TypeScript**, y control de acceso basado en permisos granulares (RBAC).
+
+---
+
+## 🏛️ Arquitectura del Sistema Frontend
+
+La aplicación implementa una arquitectura modular por capas desacopladas, asegurando alta cohesión, bajo acoplamiento y carga diferida (*Lazy Loading*) en todos los módulos de negocio:
+
+```
+src/app/
+├── core/                               # Módulos transversales singleton
+│   ├── auth/                           # AuthService con Signals y almacenamiento seguro en sessionStorage
+│   ├── config/                         # Definición de navegación y menú dinámico mapeado por permisos
+│   ├── guards/                         # authGuard, invitadoGuard, permisoGuard
+│   ├── interceptors/                   # authInterceptor (JWT Bearer) y errorInterceptor (Manejo global de errores)
+│   ├── models/                         # Interfaces TypeScript fuertemente tipadas (Cliente, Servicio, Vehículo, Orden, Reporte)
+│   └── services/                       # Servicios HTTP para el consumo de la API REST
+├── features/                           # Módulos funcionales de negocio (Lazy Loading independiente)
+│   ├── auth/login/                     # Vista de autenticación con temporizador de expiración de sesión
+│   ├── servicios/                      # Gestión de catálogo de servicios (listado, búsqueda, creación y edición)
+│   ├── vehiculos/                      # Flota de vehículos vinculados a clientes con validaciones de placa
+│   ├── ordenes/                        # Apertura reactiva y gestión de órdenes mecánicas con anulación justificada
+│   └── reportes/                       # Consolidado de ingresos por servicio, barras relativas y soporte de impresión
+├── layout/                             # Componentes de estructura visual
+│   ├── header/                         # Barra superior con datos del usuario, cuenta regresiva y cierre de sesión
+│   ├── sidebar/                        # Menú de navegación reactivo computado según permisos del usuario conectado
+│   └── main-layout/                    # Contenedor estructural con <router-outlet />
+└── shared/                             # Componentes y utilitarios reutilizables
+    ├── directives/                     # Directiva estructural *appSiPermiso para renderizado condicional en DOM
+    └── pages/                          # Vistas de estado HTTP 403 (Acceso Denegado) y 404 (Página No Encontrada)
+```
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-- **Framework:** Angular 22.2.0 (Standalone Components, sin `NgModule`)
-- **Lenguaje:** TypeScript 5.6+ / 6.0 (Strict mode, ES2022)
-- **Estado y Reactividad:** Angular Signals (`signal()`, `computed()`) y RxJS (`Observable`, `catchError`, `tap`)
-- **Formularios:** `ReactiveFormsModule` con `NonNullableFormBuilder` y validadores síncronos
-- **Estilos:** CSS3 modular, variables semánticas, Responsive Design y reglas `@media print`
-- **Navegación:** Angular Router con Lazy Loading (`loadChildren`, `loadComponent`), Guards de ruta e inyección con `withComponentInputBinding()`
-- **Seguridad:** Interceptor HTTP para JWT Bearer, Interceptor de Errores centralizado y directiva estructural `*appSiPermiso`
-
----
-
-## 📁 Estructura del Proyecto
-
-```
-autoandes-frontend/
-├── src/
-│   ├── app/
-│   │   ├── core/                      # Núcleo de la aplicación (Singleton)
-│   │   │   ├── auth/                  # AuthService, modelos de autenticación
-│   │   │   ├── config/                # Menú de navegación mapeado por permisos
-│   │   │   ├── guards/                # authGuard, invitadoGuard, permisoGuard
-│   │   │   ├── interceptors/          # authInterceptor (JWT), errorInterceptor (401/403/409/500)
-│   │   │   ├── models/                # Interfaces TypeScript tipadas (Cliente, Servicio, Vehículo, Orden, Reporte)
-│   │   │   └── services/              # Clientes HTTP hacia el backend REST
-│   │   ├── features/                  # Módulos funcionales de negocio (Lazy Loaded)
-│   │   │   ├── auth/login/            # Pantalla de inicio de sesión con countdown de sesión
-│   │   │   ├── servicios/             # Catálogo de servicios (listado, creación y edición)
-│   │   │   ├── vehiculos/             # Flota de vehículos asociados a clientes
-│   │   │   ├── ordenes/               # Registro dinámico y gestión de órdenes mecánicas
-│   │   │   └── reportes/              # Reporte de ingresos por servicio y gráficos relativos
-│   │   ├── layout/                    # Componentes estructurales
-│   │   │   ├── header/                # Barra superior con datos de usuario y logout
-│   │   │   ├── sidebar/               # Menú reactivo filtrado por permisos con Signals
-│   │   │   └── main-layout/           # Plantilla contenedora con router-outlet
-│   │   ├── shared/                    # Recursos transversales
-│   │   │   ├── directives/            # Directiva estructural *appSiPermiso
-│   │   │   └── pages/                 # Páginas 403 (Acceso Denegado) y 404 (No Encontrado)
-│   │   ├── app.component.ts           # Componente raíz
-│   │   ├── app.config.ts              # Configuración global de providers (Router, HttpClient)
-│   │   └── app.routes.ts              # Mapeo general de rutas con lazy loading
-│   ├── environments/                  # Variables de entorno (URL del backend: http://localhost:8080/api)
-│   ├── styles.css                     # Estilos globales, utilitarios, modales y reglas de impresión
-│   └── main.ts                        # Punto de arranque de la aplicación
-├── angular.json                       # Configuración de compilación Angular
-├── package.json                       # Dependencias y scripts NPM
-└── tsconfig.json                      # Configuración del compilador TypeScript
-```
-
----
-
-## 🔐 Credenciales de Prueba
-
-| Usuario | Contraseña | Rol | Permisos Principales |
+| Componente | Tecnología | Versión | Propósito |
 |---|---|---|---|
-| `admin` | `Auto2026*` | **ADMIN** | Acceso total a todas las operaciones del taller |
-| `asesor` | `Auto2026*` | **ASESOR** | Gestión de clientes, vehículos, servicios y creación de órdenes |
-| `jefe` | `Auto2026*` | **JEFE_TALLER** | Anulación de órdenes, consulta de reportes consolidados y lectura |
-| `inactivo` | `Auto2026*` | **ASESOR** | Cuenta desactivada (prueba respuesta 401 del servidor) |
+| **Framework Web** | Angular | 22.2.0 | Framework SPA con Standalone Components (sin `NgModule`) |
+| **Lenguaje** | TypeScript | 5.6+ / 6.0 | Tipado estático estricto y características modernas ES2022 |
+| **Gestión de Estado** | Angular Signals | 22.x | Reactividad fina mediante `signal()`, `computed()` y `effect()` |
+| **Flujos Asíncronos** | RxJS | 7.8.x | Manejo de peticiones HTTP, cancelación y transformaciones |
+| **Formularios** | ReactiveFormsModule | 22.x | Formularios reactivos con `NonNullableFormBuilder` y validaciones síncronas |
+| **Navegación** | Angular Router | 22.x | Enrutamiento con Lazy Loading y enlace con `withComponentInputBinding()` |
+| **Cliente HTTP** | HttpClient | 22.x | Interceptores funcionales para inyección de token JWT y control de errores |
+| **Estilos** | CSS3 Modular | Estándar | Diseño responsivo, componentes visuales propios y reglas `@media print` |
+
+---
+
+## 🔐 Matriz de Seguridad y Roles de Usuario
+
+La interfaz de usuario adapta reactivamente su presentación y opciones de navegación de acuerdo con los permisos devueltos en el token JWT del usuario conectado:
+
+| Usuario | Contraseña | Rol Asignado | Estado | Capacidades en la Interfaz |
+|---|---|---|---|---|
+| **`admin`** | `Auto2026*` | `ROLE_ADMIN` | Activo | Acceso integral a todos los módulos: servicios, vehículos, órdenes, anulación y reportes |
+| **`asesor`** | `Auto2026*` | `ROLE_ASESOR` | Activo | Registro de vehículos, consulta de servicios, creación de órdenes de trabajo mecánicas |
+| **`jefe`** | `Auto2026*` | `ROLE_JEFE_TALLER` | Activo | Administración del catálogo de servicios, anulación justificada de órdenes y consulta de reportes |
+| **`inactivo`**| `Auto2026*` | `ROLE_ASESOR` | Inactivo | Bloqueado por el servidor (Muestra error 401 en login sin exponer detalles internos) |
+
+---
+
+## 🧭 Mapa de Enrutamiento y Protección con Guards
+
+| Ruta | Componente | Estrategia de Carga | Guard / Permiso Requerido |
+|---|---|---|---|
+| `/login` | `LoginComponent` | Eager | `invitadoGuard` |
+| `/servicios` | `ServicioListComponent` | Lazy (`loadChildren`) | `authGuard`, `permisoGuard` (`SERVICIO_LEER`) |
+| `/servicios/nuevo` | `ServicioFormComponent` | Lazy (`loadComponent`) | `authGuard`, `permisoGuard` (`SERVICIO_ESCRIBIR`) |
+| `/servicios/:id/editar` | `ServicioFormComponent` | Lazy (`loadComponent`) | `authGuard`, `permisoGuard` (`SERVICIO_ESCRIBIR`) |
+| `/vehiculos` | `VehiculoListComponent` | Lazy (`loadChildren`) | `authGuard`, `permisoGuard` (`VEHICULO_LEER`) |
+| `/vehiculos/nuevo` | `VehiculoFormComponent` | Lazy (`loadComponent`) | `authGuard`, `permisoGuard` (`VEHICULO_ESCRIBIR`) |
+| `/vehiculos/:id/editar` | `VehiculoFormComponent` | Lazy (`loadComponent`) | `authGuard`, `permisoGuard` (`VEHICULO_ESCRIBIR`) |
+| `/ordenes` | `OrdenListComponent` | Lazy (`loadChildren`) | `authGuard`, `permisoGuard` (`ORDEN_LEER`) |
+| `/ordenes/nuevo` | `OrdenFormComponent` | Lazy (`loadComponent`) | `authGuard`, `permisoGuard` (`ORDEN_REGISTRAR`) |
+| `/reportes` | `ReporteIngresosComponent` | Lazy (`loadChildren`) | `authGuard`, `permisoGuard` (`REPORTE_VER`) |
+| `/acceso-denegado` | `AccesoDenegadoComponent` | Standalone | Público |
+| `**` | `NoEncontradoComponent` | Standalone | Público |
+
+---
+
+## 💡 Aspectos Técnicos Destacados
+
+### 1. Menú Dinámico Reactivo con Signals
+El componente `SidebarComponent` utiliza `computed()` para proyectar en tiempo real los ítems de navegación autorizados a partir de los permisos contenidos en la sesión actual (`AuthService.permisos`). Al cambiar de usuario o cerrar sesión, la barra lateral se redibuja sin recargar la página.
+
+### 2. Directiva Estructural `*appSiPermiso`
+Oculta o muestra elementos clave en la vista (por ejemplo, botones "+ Nueva Orden", "Anular" o "Eliminar") garantizando que el DOM solo exponga acciones permitidas para el perfil en sesión.
+
+### 3. Registro Dinámico de Órdenes y Validación Oficial en Servidor
+- La pantalla de apertura de órdenes (`OrdenFormComponent`) implementa un `FormArray` reactivo que permite añadir entre 1 y 10 líneas de detalle con cantidades de 1 a 5 unidades.
+- Calcula estimaciones locales instantáneas para experiencia de usuario.
+- Cumple la prohibición estricta de no liquidar importes finales en el cliente: el backend es la autoridad exclusiva que valida precios activos, coherencia de kilometraje (RN-04) y calcula los subtotales y totales.
+- Si el servidor rechaza la transacción (`400` o `409 Conflict`), la interfaz conserva intactos todos los datos ingresados por el usuario para su corrección.
+
+### 4. Manejo Centralizado de Errores y RFC 7807
+El interceptor `errorInterceptor` captura respuestas con código `401 Unauthorized` redirigiendo al login, maneja respuestas `403 Forbidden` redirigiendo a `/acceso-denegado`, y los formularios mapean el diccionario `campos` de los errores `400 Bad Request` directamente bajo cada control de entrada afectado.
+
+### 5. Salida para Impresión Limpia
+Tanto las órdenes de servicio como el reporte consolidado de ingresos incorporan reglas CSS `@media print` para generar comprobantes en formato A4 limpio omitiendo cabeceras web, barras laterales y botones de acción.
 
 ---
 
@@ -73,58 +110,30 @@ autoandes-frontend/
 - **NPM:** v10.x o superior
 - **Backend AutoAndes:** Ejecutándose en `http://localhost:8080`
 
-### Ejecución
+### Instrucciones de Ejecución
 ```bash
-# Navegar a la carpeta del frontend
+# 1. Navegar a la carpeta del frontend
 cd autoandes-frontend
 
-# Iniciar el servidor de desarrollo
+# 2. Iniciar el servidor de desarrollo en el puerto 4200
 npm start
-# o
+# o alternativamente:
 npx ng serve --port 4200
 ```
-La aplicación estará disponible en: [http://localhost:4200](http://localhost:4200)
+
+Abrir el navegador en: [http://localhost:4200](http://localhost:4200)
 
 ### Compilación para Producción
 ```bash
 npx ng build
 ```
-Los archivos de distribución optimizados se generarán en la carpeta `dist/autoandes-frontend`.
+Los artefactos compilados y minificados se generarán en `dist/autoandes-frontend`.
 
 ---
 
-## 🧭 Mapa de Rutas y Control de Acceso
+## 🌿 Estrategia de Versionamiento (Git Flow)
 
-| Ruta | Componente | Guard / Permiso Requerido | Descripción |
-|---|---|---|---|
-| `/login` | `LoginComponent` | `invitadoGuard` | Autenticación con credenciales |
-| `/servicios` | `ServicioListComponent` | `authGuard`, `permisoGuard` (`SERVICIO_LEER`) | Catálogo de servicios |
-| `/servicios/nuevo` | `ServicioFormComponent` | `authGuard`, `permisoGuard` (`SERVICIO_ESCRIBIR`) | Alta de servicio |
-| `/servicios/:id/editar` | `ServicioFormComponent` | `authGuard`, `permisoGuard` (`SERVICIO_ESCRIBIR`) | Modificación de servicio |
-| `/vehiculos` | `VehiculoListComponent` | `authGuard`, `permisoGuard` (`VEHICULO_LEER`) | Listado de vehículos |
-| `/vehiculos/nuevo` | `VehiculoFormComponent` | `authGuard`, `permisoGuard` (`VEHICULO_ESCRIBIR`) | Alta de vehículo |
-| `/vehiculos/:id/editar` | `VehiculoFormComponent` | `authGuard`, `permisoGuard` (`VEHICULO_ESCRIBIR`) | Edición de vehículo |
-| `/ordenes` | `OrdenListComponent` | `authGuard`, `permisoGuard` (`ORDEN_LEER`) | Historial y anulación de órdenes |
-| `/ordenes/nuevo` | `OrdenFormComponent` | `authGuard`, `permisoGuard` (`ORDEN_CREAR`) | Creación reactiva de orden |
-| `/reportes` | `ReporteIngresosComponent` | `authGuard`, `permisoGuard` (`REPORTE_INGRESOS`) | Consolidado de ingresos |
-| `/acceso-denegado` | `AccesoDenegadoComponent` | Público | Pantalla informativa 403 |
-| `**` | `NoEncontradoComponent` | Público | Pantalla 404 |
-
----
-
-## 💡 Aspectos Técnicos Destacados
-
-1. **Gestión Reactiva con Signals:**
-   - La barra lateral calcula dinámicamente qué opciones de menú mostrar en base a los permisos del usuario conectado con `computed()`.
-   - Búsquedas y filtros en tiempo real sin recargar página.
-   - Cálculo en vivo del subtotal y total estimado en el registro de órdenes.
-
-2. **Directiva `*appSiPermiso`:**
-   - Renderiza u oculta elementos del DOM (botones como "+ Nueva Orden", "Anular", "Eliminar") según los permisos efectivos en el token JWT.
-
-3. **Mapeo de Errores de Validación de Backend (RFC 7807 / Problem Details):**
-   - Cuando el backend retorna error `400 Bad Request` con mapa `campos`, el formulario resalta los controles exactos y muestra el mensaje devuelto por el servidor.
-   - En caso de conflicto de negocio (`409 Conflict`), se muestra una alerta superior sin borrar los campos ni las líneas ingresadas.
-
-4. **Soporte de Impresión:**
-   - Hojas de estilo `@media print` para imprimir órdenes de servicio y reportes de ingresos en formato A4 limpio omitiendo elementos de navegación.
+El proyecto frontend sigue el modelo Git Flow con commits semánticos:
+- `main`: Rama de despliegue y producción etiquetada con `v1.0-examen-u2`.
+- `develop`: Rama de integración continua.
+- `examen-a-gamarra`: Rama de implementación de características y vistas.

@@ -30,7 +30,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       <div class="alerta no-imprimir">{{ error() }}</div>
     }
 
-    <!-- Filtros de búsqueda -->
     <div class="card no-imprimir" style="padding: 16px; margin-bottom: 16px;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; align-items: flex-end;">
         <div>
@@ -68,7 +67,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       </div>
     </div>
 
-    <!-- Listado de órdenes -->
     @if (cargando()) {
       <div class="card" style="text-align: center; color: #64748b; padding: 40px;">
         Cargando órdenes de servicio...
@@ -138,7 +136,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       </div>
     }
 
-    <!-- Modal Detalle de la Orden -->
     @if (ordenSeleccionada()) {
       <div class="modal-overlay">
         <div class="modal-content" style="max-width: 680px;">
@@ -212,7 +209,6 @@ import { SiPermisoDirective } from '../../../../shared/directives/si-permiso';
       </div>
     }
 
-    <!-- Modal Anulación -->
     @if (ordenParaAnular()) {
       <div class="modal-overlay">
         <div class="modal-content">
@@ -258,13 +254,11 @@ export class OrdenListComponent implements OnInit {
   error = signal<string | null>(null);
   mensajeExito = signal<string | null>(null);
 
-  // Filtros
   filtroPlaca: string = '';
   filtroEstado: string = '';
   filtroDesde: string = '';
   filtroHasta: string = '';
 
-  // Modales
   ordenSeleccionada = signal<OrdenServicio | null>(null);
   ordenParaAnular = signal<OrdenServicio | null>(null);
   motivoAnulacionTexto: string = '';

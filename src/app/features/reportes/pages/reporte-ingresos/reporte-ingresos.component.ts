@@ -21,7 +21,6 @@ import { IngresoPorServicio } from '../../../../core/models/reporte.model';
       </div>
     </div>
 
-    <!-- Header para impresión -->
     <div class="solo-impresion" style="margin-bottom: 24px;">
       <h1 style="color: #0f2e5c; margin: 0;">AutoAndes - Taller Mecánico Especializado</h1>
       <h3 style="margin: 4px 0 12px; color: #334155;">Reporte de Ingresos Consolidados por Servicio</h3>
@@ -31,7 +30,6 @@ import { IngresoPorServicio } from '../../../../core/models/reporte.model';
       <hr style="margin-top: 12px; border: 0; border-top: 1px solid #cbd5e1;">
     </div>
 
-    <!-- Filtros de fecha -->
     <div class="card no-imprimir" style="padding: 16px; margin-bottom: 16px;">
       <div style="display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 180px;">
@@ -53,7 +51,6 @@ import { IngresoPorServicio } from '../../../../core/models/reporte.model';
       <div class="alerta">{{ error() }}</div>
     }
 
-    <!-- Tarjetas de resumen -->
     <div class="grid-2" style="margin-bottom: 20px;">
       <div class="card" style="margin-bottom: 0; background: #f0fdf4; border: 1px solid #bbf7d0;">
         <div style="font-size: 13px; font-weight: 600; color: #166534; text-transform: uppercase;">
@@ -74,7 +71,6 @@ import { IngresoPorServicio } from '../../../../core/models/reporte.model';
       </div>
     </div>
 
-    <!-- Tabla consolidada -->
     @if (cargando()) {
       <div class="card" style="text-align: center; color: #64748b; padding: 40px;">
         Generando reporte consolidado...
@@ -154,7 +150,6 @@ export class ReporteIngresosComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // Default: primer día de mes actual hasta hoy
     const now = new Date();
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
     this.desde = firstDay.toISOString().substring(0, 10);
