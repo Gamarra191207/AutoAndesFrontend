@@ -32,11 +32,11 @@ import { HttpErrorResponse } from '@angular/common/http';
               type="text"
               class="input"
               formControlName="username"
-              placeholder="Ej. admin, asesor, jefe"
+              placeholder="Ingrese su usuario"
               autocomplete="username"
             />
             @if (loginForm.get('username')?.touched && loginForm.get('username')?.invalid) {
-              <span class="campo-error">Ingrese su nombre de usuario</span>
+              <span class="campo-error">El usuario es requerido</span>
             }
           </div>
 
@@ -51,7 +51,7 @@ import { HttpErrorResponse } from '@angular/common/http';
               autocomplete="current-password"
             />
             @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
-              <span class="campo-error">Ingrese su contraseña</span>
+              <span class="campo-error">La contraseña es requerida</span>
             }
           </div>
 
@@ -61,22 +61,12 @@ import { HttpErrorResponse } from '@angular/common/http';
             [disabled]="loginForm.invalid || enviando()"
           >
             @if (enviando()) {
-              <span>Ingresando...</span>
+              <span>Iniciando sesión...</span>
             } @else {
               <span>Iniciar Sesión</span>
             }
           </button>
         </form>
-
-        <div class="login-ayuda">
-          <strong>Usuarios de prueba (clave: Auto2026*):</strong>
-          <ul>
-            <li><code>admin</code> : Administrador total</li>
-            <li><code>asesor</code> : Asesor de mostrador</li>
-            <li><code>jefe</code> : Jefe de taller</li>
-            <li><code>inactivo</code> : Cuenta deshabilitada (401)</li>
-          </ul>
-        </div>
       </div>
     </div>
   `,
@@ -92,7 +82,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     .login-card {
       background: #ffffff;
       border-radius: 16px;
-      padding: 36px 32px;
+      padding: 40px 32px;
       max-width: 420px;
       width: 100%;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
@@ -101,16 +91,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     .icono-auto { font-size: 42px; margin-bottom: 8px; }
     .login-header h1 { margin: 0; color: #0f2e5c; font-size: 26px; }
     .login-header p { margin: 6px 0 0; color: #64748b; font-size: 13px; }
-    .btn-block { width: 100%; padding: 12px; font-size: 15px; margin-top: 8px; }
-    .login-ayuda {
-      margin-top: 24px;
-      padding-top: 16px;
-      border-top: 1px solid #e2e8f0;
-      font-size: 12px;
-      color: #64748b;
-    }
-    .login-ayuda ul { margin: 8px 0 0; padding-left: 18px; }
-    .login-ayuda code { background: #f1f5f9; padding: 2px 5px; border-radius: 4px; color: #0f2e5c; }
+    .btn-block { width: 100%; padding: 12px; font-size: 15px; margin-top: 12px; }
   `]
 })
 export class LoginComponent {
@@ -143,8 +124,11 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         this.enviando.set(false);
-        this.errorMensaje.set(err.error?.mensaje || 'Credenciales incorrectas o usuario inhabilitado');
-        this.loginForm.patchValue({ password: '' });
+        if (err.status === 401) {
+          this.errorMensaje.set('Usuario o contraseña incorrectos.');
+        } else {
+          this.errorMensaje.set('No fue posible conectar con el servidor. Intente más tarde.');
+        }
       }
     });
   }

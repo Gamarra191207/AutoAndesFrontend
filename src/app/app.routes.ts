@@ -45,7 +45,7 @@ export const routes: Routes = [
         path: 'reportes',
         loadChildren: () => import('./features/reportes/reportes.routes').then(m => m.REPORTES_ROUTES),
         canActivate: [permisoGuard],
-        data: { permiso: 'REPORTE_INGRESOS' }
+        data: { permiso: 'REPORTE_VER' }
       }
     ]
   },
